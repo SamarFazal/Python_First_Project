@@ -40,6 +40,7 @@ def readFilePDF():
                     
                         print(file1)
                         for file in glob.glob(pdf_path+"/"+file1 + "/*.pdf"):
+                                folderPath=pdf_path+"/"+file1
                                 print(file)      
                                 if file.endswith('.pdf'):
                                     #fileReader = PDF.PdfFileReader(open(file, "rb"))
@@ -55,6 +56,7 @@ def readFilePDF():
                                     print(text)
                                     num = re.findall(r'[0-9]+', text)
                                     print(num)
+                                    readText(text,folderPath)
                                 else:
                                         print("not in format")
             
@@ -68,7 +70,36 @@ def readFilePDF():
             print("file not found")
             
    
-
+def readText(pdfdetais,txt_path):
+    
+    try:
+         print("txt_path:"+txt_path)
+         L = ["This is Delhi \n", "This is Paris \n", "This is London \n"] 
+         newTextPath=txt_path+"/myfile.txt"  
+         file1 = open(newTextPath, "w")
+     
+         print("Output of Read function is ")
+         
+         
+         file1.write("Write in txt file \n")
+         file1.writelines(L)
+         file1.writelines(pdfdetais)
+         #print("text file :"+file1.read())
+         file2 = open(newTextPath, "r+")
+         
+         
+         print("Output of Write function is ")
+         print("After write text file :"+file2.read())
+         
+         file1.close()
+         file2.close()
+         
+        
+    
+    except FileNotFoundError:
+        print("file not found")
+    except IOError:
+            print("Error in text read")
 
 if ((os.path.exists(pdf_path))):
     readFilePDF()
