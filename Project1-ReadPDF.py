@@ -17,25 +17,36 @@ def readFilePDF(pageNo):
             pdf_Reader = PDF.PdfReader(pdf_File_Object)
                
             
-            print("No. of pages in the given PDF file: ", len(pdf_Reader.pages))  
-               
-            if pageNo!="" and pageNo!=0 :  #project 3
-                
-                page_Object = pdf_Reader.pages[pageNo-1] 
-            else :
-                page_Object = pdf_Reader.pages[0]
+            print("No. of pages in the given PDF file: ", len(pdf_Reader.pages)) 
+            print(pageNo)
+            print(pageNo<=len(pdf_Reader.pages))
+            if pageNo<=len(pdf_Reader.pages) :
+                print("samar")
                  
-            
-            pdfdetais= "PDf ReadData \n"+ page_Object.extract_text()
-            print("Pdf: "+page_Object.extract_text())  
-            
-            readText(pdfdetais)   #read read and write text file
-            
-            pdf_File_Object.close() 
+                if pageNo!="" and pageNo!=0 :  #project 3
+                    
+                    page_Object = pdf_Reader.pages[pageNo-1] 
+                else :
+                    page_Object = pdf_Reader.pages[0]
+                     
+                
+                pdfdetais= "PDf ReadData \n"+ page_Object.extract_text()
+                print("Pdf: "+page_Object.extract_text())  
+                
+                readText(pdfdetais)   #read read and write text file
+                
+                pdf_File_Object.close()
+            else :
+                print("sequence index out of range")
+                raise IndexError("sequence index out of range")
+                 
         except FileNotFoundError:
             print("file not found")
         except IOError:
             print("file not found")
+        except Exception:
+            raise IndexError("sequence index out of range")
+        
             
    
 
@@ -67,6 +78,7 @@ def readText(pdfdetais):
         print("file not found")
     except IOError:
             print("Error in text read")
+    
 
 if ((os.path.exists(pdf_path)) and (os.path.exists(txt_path))):
     pageNo=int(input(" Enter the PDF page no ")) #project 3
