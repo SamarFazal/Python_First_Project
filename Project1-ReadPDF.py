@@ -7,7 +7,7 @@ txt_path=r"/home/samar/Samar_PDF/content/text.txt"
 
 global pdfdetais
 
-def readFilePDF():
+def readFilePDF(pageNo):
        
     
         try :
@@ -19,9 +19,12 @@ def readFilePDF():
             
             print("No. of pages in the given PDF file: ", len(pdf_Reader.pages))  
                
-            
-            page_Object = pdf_Reader.pages[0] 
-               
+            if pageNo!="" and pageNo!=0 :  #project 3
+                
+                page_Object = pdf_Reader.pages[pageNo-1] 
+            else :
+                page_Object = pdf_Reader.pages[0]
+                 
             
             pdfdetais= "PDf ReadData \n"+ page_Object.extract_text()
             print("Pdf: "+page_Object.extract_text())  
@@ -66,7 +69,8 @@ def readText(pdfdetais):
             print("Error in text read")
 
 if ((os.path.exists(pdf_path)) and (os.path.exists(txt_path))):
-    readFilePDF()
+    pageNo=int(input(" Enter the PDF page no ")) #project 3
+    readFilePDF(pageNo)
 else:
     print("File or Folder not found:")
              
