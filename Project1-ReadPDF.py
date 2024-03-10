@@ -1,6 +1,7 @@
 import PyPDF2 as PDF
 import os  
-   
+import configparser 
+import re  
 #pdf_path=r"C:UsersDellDesktopTesting Tesseractexample.pdf"
 pdf_path=r"/home/samar/Samar_PDF/content/dummy.pdf"
 txt_path=r"/home/samar/Samar_PDF/content/text.txt"
@@ -21,8 +22,7 @@ def readFilePDF(pageNo):
             print(pageNo)
             print(pageNo<=len(pdf_Reader.pages))
             if pageNo<=len(pdf_Reader.pages) :
-                print("samar")
-                 
+                                 
                 if pageNo!="" and pageNo!=0 :  #project 3
                     
                     page_Object = pdf_Reader.pages[pageNo-1] 
@@ -33,7 +33,29 @@ def readFilePDF(pageNo):
                 pdfdetais= "PDf ReadData \n"+ page_Object.extract_text()
                 print("Pdf: "+page_Object.extract_text())  
                 
-                readText(pdfdetais)   #read read and write text file
+                #project-4 Read regular expression from a config file and extract content
+
+                config = configparser.ConfigParser()
+                config.read('Test.cfg')
+                
+                pattern1=config['Regular Expression']['Pattern1']
+                pattern2=config['Regular Expression']['Pattern2']
+
+                pattern3=config['Regular Expression1']['Pattern3']
+                pattern4=config['Regular Expression1']['Pattern4']
+                
+                #print(pattern2)
+                #print(pdfdetais)
+                pattern=pattern2
+                print(pattern)
+                #filterdCfg = re.findall(pattern, str(pdfdetais), re.MULTILINE | re.VERBOSE)
+                filterdCfg = re.findall(pattern, str(pdfdetais))
+                print(" Inside Pattern: ",re.search(pattern, str(pdfdetais)))
+                #print(" Inside Pattern: ",x)
+                print(" Inside Pattern: ",filterdCfg)
+                #project-4 Read regular expression from a config file and extract content
+                readText(filterdCfg)
+                #readText(pdfdetais)   #read read and write text file
                 
                 pdf_File_Object.close()
             else :
